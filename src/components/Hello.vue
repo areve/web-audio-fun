@@ -1,15 +1,14 @@
 <template>
   <div class="hello">
     <section class="make-center">
-      <button @click="openRoom">Open Room</button>
-      <button @click="joinRoom">Join Room</button>
+      <!-- <button @click="openRoom">Open Room</button>
+      <button @click="joinRoom">Join Room</button> -->
 
       <ul id="vue-app">
         <li
           v-for="item in videosList"
           :key="item.id"
         >
-          {{item}}
           <video
       controls
       autoplay
@@ -78,6 +77,8 @@ export default {
       })
       this.videosList = newList
     }
+
+    this.autoAddOrJoin()
   },
   methods: {
     openRoom () {
@@ -87,6 +88,13 @@ export default {
     },
     joinRoom () {
       connection.join('room1')
+    },
+    autoAddOrJoin () {
+      connection.openOrJoin('room1', function (isRoomExist, roomid) {
+        if (isRoomExist === false && connection.isInitiator === true) {
+          console.log(connection.sessionid)
+        }
+      })
     }
   }
 }
