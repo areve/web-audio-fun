@@ -25,6 +25,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       extract: true
     })
   },
+  baseUrl: '/web-audio-fun',
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
