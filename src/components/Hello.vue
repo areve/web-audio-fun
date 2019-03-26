@@ -13,7 +13,6 @@
         :id="item.id"
       ></video>
     </div>
-    {{videosList}}
   </div>
 </template>
 
