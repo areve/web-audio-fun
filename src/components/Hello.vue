@@ -13,6 +13,7 @@
         :id="item.id"
       ></video>
     </div>
+    {{videosList}}
   </div>
 </template>
 
@@ -20,7 +21,7 @@
 import RTCMultiConnection from 'rtcmulticonnection'
 
 export default {
-  name: 'hello',
+  name: 'video-conference-demo',
   data () {
     return {
       videosList: []
@@ -28,7 +29,7 @@ export default {
   },
   mounted () {
     const connection = new RTCMultiConnection()
-    connection.socketURL = '/'
+    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/'
     connection.socketMessageEvent = 'video-conference-demo'
     connection.session = {
       audio: true,
@@ -47,16 +48,11 @@ export default {
       })
     }
     connection.onstreamended = event => {
-      const newList = []
-      this.videosList.forEach(item => {
-        if (item.id !== event.streamid) newList.push(item)
-      })
+      const newList = this.videosList.filter(item => item.id !== event.streamid)
       this.$set(this, 'videosList', newList)
     }
-    connection.openOrJoin('room1', function (isRoomExist, roomid) {
-      if (isRoomExist === false && connection.isInitiator === true) {
-        console.log(connection.sessionid)
-      }
+    connection.openOrJoin('video-conference-demo-room', function (isRoomExist, roomid) {
+      console.log(connection.sessionid, connection.isInitiator, isRoomExist, roomid)
     })
   }
 }
