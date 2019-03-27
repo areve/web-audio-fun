@@ -1,6 +1,6 @@
 <template>
-  <div >
-    watch this
+  <div>
+    <p>A page using <a href="https://github.com/muaz-khan/RTCMultiConnection">RTCMultiConnection</a> try opening this page on a few different machines.</p>
     <div
       v-for="item in videosList"
       :key="item.id"
