@@ -1,7 +1,18 @@
 const express = require('express')
-const serveStatic = require('serve-static')
-const app = express()
-app.use(serveStatic(__dirname + '/dist'))
-const port = process.env.PORT || 5000
-app.listen(port)
-console.log('server started ' + port)
+const socket = require('socket.io')
+const rtcMultiConnectionServer = require('rtcmulticonnection-server')
+
+const PORT = process.env.PORT || 5000
+const rtcConfig = {}
+
+const app = new express()
+app.use(express.static(__dirname + '/dist/'))
+rtcMultiConnectionServer.beforeHttpListen(app, rtcConfig)
+const server = app.listen(PORT, () => {
+    rtcMultiConnectionServer.afterHttpListen(server, rtcConfig)
+})
+
+const io = socket(server)
+io.on("connection", socket => {
+    rtcMultiConnectionServer.addSocket(socket, rtcConfig)
+})

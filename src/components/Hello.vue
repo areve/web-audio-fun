@@ -1,5 +1,6 @@
 <template>
   <div >
+    watch this
     <div
       v-for="item in videosList"
       :key="item.id"
@@ -28,7 +29,7 @@ export default {
   },
   mounted () {
     const connection = new RTCMultiConnection()
-    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/'
+    connection.socketURL = '/'
     connection.socketMessageEvent = 'video-conference-demo'
     connection.session = {
       audio: true,
