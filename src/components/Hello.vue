@@ -14,17 +14,21 @@
         :id="item.id"
       ></video>
     </div>
+
+    <div>PTT: {{ptt}}</div>
   </div>
 </template>
 
 <script>
+
 import RTCMultiConnection from 'rtcmulticonnection'
 
 export default {
   name: 'video-conference-demo',
   data () {
     return {
-      videosList: []
+      videosList: [],
+      ptt: 'off'
     }
   },
   mounted () {
@@ -53,6 +57,11 @@ export default {
     }
     connection.openOrJoin('video-conference-demo-room', function (isRoomExist, roomid) {
       console.log(connection.sessionid, connection.isInitiator, isRoomExist, roomid)
+    })
+
+    connection.socket.on('news', (data) => {
+      this.ptt = data.ptt
+      console.log('data', data)
     })
   }
 }
