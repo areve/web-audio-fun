@@ -63,6 +63,10 @@ export default {
       this.ptt = data.ptt
       console.log('data', data)
     })
+
+    connection.socket.on('log', (data) => {
+      console.log('log', data)
+    })
   }
 }
 </script>
