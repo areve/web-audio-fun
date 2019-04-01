@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 const rtcConfig = {};
 
 const app = new express();
-var textParser = bodyParser.text()
+var textParser = bodyParser.text({ type: 'text/plain' })
 
 app.get(/^\/api\/ptt\/on/, (req, res) => {
   //if(!globalSocket) return
